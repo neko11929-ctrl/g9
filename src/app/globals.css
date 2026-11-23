@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html { background: #06040c; }
+body {
+  @apply bg-ink font-sans text-silver antialiased;
+  background-image: radial-gradient(1200px 600px at 80% -10%, rgba(91,43,181,.18), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+h1, h2, h3 { @apply font-display text-white; letter-spacing: .01em; }
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { letter-spacing: 0; }
+::selection { background: rgba(143,69,255,.45); color: #fff; }
+:focus-visible { outline: 2px solid #8f45ff; outline-offset: 3px; }
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 text-[15px] font-medium transition;
+  }
+  .btn-primary { @apply bg-electric text-white shadow-glow hover:bg-[#a064ff]; }
+  .btn-ghost { @apply border border-white/15 text-silver hover:border-electric hover:text-white; }
+  .btn-danger { @apply border border-red-500/40 text-red-300 hover:bg-red-500/10; }
+  .field {
+    @apply min-h-[48px] w-full rounded-xl border border-white/10 bg-plum px-4 text-white placeholder:text-silver/40 focus:border-electric focus:outline-none;
+  }
+  textarea.field { @apply py-3; }
+  .panel { @apply rounded-2xl border border-white/10 bg-void/80 p-5; }
+  .wrap { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+}
+
+/* ---------- Hero scene animation ---------- */
+@keyframes drift-a { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+@keyframes drift-b { from { transform: translateX(5%); } to { transform: translateX(-5%); } }
+@keyframes shimmer { 0%,100% { opacity: .25; transform: scaleX(.7); } 50% { opacity: .8; transform: scaleX(1.1); } }
+@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-120px); opacity: 0; } }
+@keyframes sway { 0%,100% { transform: rotate(-2.5deg); } 50% { transform: rotate(3deg); } }
+@keyframes pulse-moon { 0%,100% { opacity: .55; } 50% { opacity: .8; } }
+@keyframes fog { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
+
+.scene .cloud-a { animation: drift-a 38s ease-in-out infinite alternate; }
+.scene .cloud-b { animation: drift-b 52s ease-in-out infinite alternate; }
+.scene .glint { transform-box: fill-box; transform-origin: center; animation: shimmer 5s ease-in-out infinite; }
+.scene .mote { animation: rise 11s linear infinite; }
+.scene .hair, .scene .scarf { transform-box: fill-box; transform-origin: 0% 0%; animation: sway 6s ease-in-out infinite; }
+.scene .scarf { animation-duration: 4.6s; animation-delay: -1.2s; }
+.scene .moon-glow { animation: pulse-moon 9s ease-in-out infinite; }
+.scene .fog { animation: fog 30s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene * { animation: none !important; }
+  * { scroll-behavior: auto !important; }
+}
