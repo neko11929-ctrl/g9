@@ -1,4 +1,4 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 /** Cookie-aware client: respects RLS as the current visitor/admin. */
@@ -10,7 +10,7 @@ export function supabaseServer() {
     {
       cookies: {
         getAll: () => store.getAll(),
-        setAll: (list) => {
+        setAll: (list: { name: string; value: string; options: CookieOptions }[]) => {
           try {
             list.forEach(({ name, value, options }) => store.set(name, value, options));
           } catch {
